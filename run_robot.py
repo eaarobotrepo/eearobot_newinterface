@@ -28,7 +28,7 @@ def main(use_imu=False):
     )
     state = State()
     print("Creating joystick listener...")
-    joystick_interface = JoystickInterface(config)
+    eaa_interface = Eaainterface(config)
     print("Done.")
 
     last_loop = time.time()
@@ -43,12 +43,14 @@ def main(use_imu=False):
     while True:
         print("Waiting for L1 to activate robot.")
         while True:
-            command = joystick_interface.get_command(state)
+            command = eaa_interface.get_command(state)
+            #brugbart?
             joystick_interface.set_color(config.ps4_deactivated_color)
             if command.activate_event == 1:
                 break
             time.sleep(0.1)
         print("Robot activated.")
+        #brugtbart?
         joystick_interface.set_color(config.ps4_color)
 
         while True:
@@ -58,7 +60,7 @@ def main(use_imu=False):
             last_loop = time.time()
 
             # Parse the udp joystick commands and then update the robot controller's parameters
-            command = joystick_interface.get_command(state)
+            command = eaa_interface.get_command(state)
             if command.activate_event == 1:
                 print("Deactivating Robot")
                 break
