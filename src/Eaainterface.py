@@ -5,8 +5,8 @@ from src.State import BehaviorState, State
 from src.Command import Command
 from src.Utilities import deadband, clipped_first_order_filter
 
-
-class JoystickInterface:
+# lav ny init der laver forbindelse mellem server og denne py fil
+class Eaainterface:
     def __init__(
         self, config, udp_port=8830, udp_publisher_port = 8840,
     ):
@@ -23,6 +23,7 @@ class JoystickInterface:
 
     def get_command(self, state, do_print=False):
         try:
+            #her kaldes den nye måde at få be
             msg = self.udp_handle.get()
             command = Command()
             
@@ -77,7 +78,7 @@ class JoystickInterface:
                 print("UDP Timed out")
             return Command()
 
-
+#sletes?
     def set_color(self, color):
         joystick_msg = {"ps4_color": color}
         self.udp_publisher.send(joystick_msg)
